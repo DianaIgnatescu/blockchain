@@ -173,6 +173,11 @@ def mine():
             'previous_hash': block['previous_hash'],
         }
         return jsonify(response), 200
+    else:
+        response = {
+            'massage': 'The proposed proof is invalid.'
+        }
+        return jsonify(response), 400
 
 
 @app.route('/transactions/new', methods=['POST'])
