@@ -13,7 +13,7 @@ class Blockchain(object):
         self.chain = []
         self.current_transactions = []
         self.nodes = set()
-
+        self.already_solved = False
         self.new_block(previous_hash=1, proof=100)
 
     def new_block(self, proof, previous_hash=None):
@@ -68,7 +68,6 @@ class Blockchain(object):
 
         # We must make sure that the Dictionary is Ordered,
         # or we'll have inconsistent hashes
-
         block_string = json.dumps(block, sort_keys=True).encode()
         return hashlib.sha256(block_string).hexdigest()
 
@@ -93,7 +92,7 @@ class Blockchain(object):
     @staticmethod
     def valid_proof(last_proof, proof):
         """
-        Validates the Proof:  Does hash(last_proof, proof) contain 4
+        Validates the Proof:  Does hash(last_proof, proof) contain 6
         leading zeroes?
         """
         guess = f'{last_proof}{proof}'.encode()
