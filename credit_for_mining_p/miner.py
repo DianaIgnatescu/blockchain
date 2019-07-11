@@ -57,6 +57,8 @@ if __name__ == '__main__':
         node = "http://localhost:5000"
 
     coins_mined = 0
+
+    saved_id = get_id()
     # Run forever until interrupted
     while True:
         # Get the last proof from the server
@@ -64,7 +66,7 @@ if __name__ == '__main__':
         data = r.json()
         new_proof = proof_of_work(data.get('proof'))
 
-        post_data = {"proof": new_proof}
+        post_data = {"proof": new_proof, "id": saved_id}
 
         r = requests.post(url=node + "/mine", json=post_data)
         data = r.json()
