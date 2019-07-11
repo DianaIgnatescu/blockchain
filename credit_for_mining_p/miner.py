@@ -1,5 +1,7 @@
 import hashlib
 import requests
+import os.path
+from uuid import uuid4
 
 import sys
 
@@ -29,6 +31,22 @@ def valid_proof(last_proof, proof):
     guess = f'{last_proof}{proof}'.encode()
     guess_hash = hashlib.sha256(guess).hexdigest()
     return guess_hash[:6] == "000000"
+
+
+def get_id():
+    if os.path.isfile('my_id.txt'):
+        with open('my_id.txt') as f:
+            file_data = f.read()
+            return file_data
+    else:
+        f = open('my_id.txt', 'w+')
+
+        id = str(uuid4()).replace('-', '')
+        f.write(id)
+        f.close()
+
+        file_data = id
+        return file_data
 
 
 if __name__ == '__main__':
